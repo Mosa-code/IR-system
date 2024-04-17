@@ -1,9 +1,20 @@
 import pickle
 
-with open('posting_list_df.pkl', 'rb') as f:
-    data = pickle.load(f)
-    for term, doc_list_indices in list(data.items())[:10]:
-        doc_list = [doc_name for idx, doc_name in enumerate(data.columns) if doc_list_indices[idx] == 1]
-        term_encoded = term.encode('utf-8', errors='replace').decode('utf-8')
-        doc_list_encoded = [doc.encode('utf-8', errors='replace').decode('utf-8') for doc in doc_list]
-        print(f"{term_encoded}: {doc_list_encoded}")
+# Load the inverted index from the pickle file
+with open('inverted_index.pkl', 'rb') as f:
+    inverted_index = pickle.load(f)
+
+# Print the contents of the inverted index
+for term, vector in list(inverted_index.items())[:50]:
+    print(f"{term}: {vector}")
+    
+# Load the similarity matrix from the pickle file
+with open('similarity_matrix.pkl', 'rb') as f:
+    similarity_matrix = pickle.load(f)
+
+# Print the shape of the similarity matrix (optional)
+print("Similarity Matrix Shape:", similarity_matrix.shape)
+
+# Print the first 10 rows and columns of the similarity matrix
+for row in similarity_matrix[:10]:
+    print(row[:10])  # Print the first 10 elements of each row
